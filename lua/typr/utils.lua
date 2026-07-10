@@ -181,7 +181,11 @@ M.gen_lines_diff = function(line, userline)
         if resultlen > 0 and result[resultlen][2] == status then
             result[resultlen][1] = result[resultlen][1] .. expected
         else
-            table.insert(result, { expected, status })
+            if state.config.replace_errors then
+                table.insert(result, { char, status })
+            else
+                table.insert(result, { expected, status })
+            end
         end
     end
 

@@ -29,6 +29,7 @@ local M = {
     symbols = false,
     random = false,
     phrases = nil, -- can be a table of strings
+    replace_errors = false,
     insert_on_start = false,
     stats_filepath = vim.fn.stdpath "data" .. "/typrstats",
     mappings = nil,
