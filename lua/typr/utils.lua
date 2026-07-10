@@ -1,3 +1,13 @@
+-- TODOs
+------- (BUGS)
+-- Backspace destroys linewrapping
+-- Tests stops one character to soon
+-- slowest and fastest keys do not respect utf-8
+-- triggers blink.cmp
+-- typing the last word of the line plus " " breaks the line break
+------- (FEAT)
+-- Do some different graphs for accuracy and wpm (automatic focus)
+
 local M = {}
 local state = require "typr.state"
 local words = require "typr.constants.words"
@@ -359,16 +369,15 @@ M.handle_test_end = function()
     local pos = vim.api.nvim_win_get_cursor(state.win)
     local curline_endcol = vim.fn.strchars(state.default_lines[pos[1] - state.words_row])
     local cur_col = vim.str_utfindex(vim.api.nvim_get_current_line(), "utf-8", pos[2])
-    
 
     if cur_col == curline_endcol then
-        if state.words_row_end == pos[1] then
+        if state.words_row_end - 1 == pos[1] then
             M.on_finish()
             return
         end
 
         vim.schedule(function()
-            vim.api.nvim_win_set_cursor(state.win, { pos[1] + 1, state.xpad })
+            vim.api.nvim_win_set_cursor(state.win, { pos[1] + 2, state.xpad })
         end)
     end
 end
