@@ -367,17 +367,17 @@ end
 
 M.handle_test_end = function()
     local pos = vim.api.nvim_win_get_cursor(state.win)
-    local curline_endcol = vim.fn.strchars(state.default_lines[pos[1] - state.words_row])
+    local curline_endcol = vim.fn.strchars(state.default_lines[pos[1] - state.words_row]) + 1
     local cur_col = vim.str_utfindex(vim.api.nvim_get_current_line(), "utf-8", pos[2])
 
     if cur_col == curline_endcol then
-        if state.words_row_end - 1 == pos[1] then
+        if state.words_row_end == pos[1] then
             M.on_finish()
             return
         end
 
         vim.schedule(function()
-            vim.api.nvim_win_set_cursor(state.win, { pos[1] + 2, state.xpad })
+            vim.api.nvim_win_set_cursor(state.win, { pos[1] + 1, state.xpad })
         end)
     end
 end
