@@ -7,8 +7,8 @@ local volt = require "volt"
 local function utf8_chars(str)
   local chars = {}
 
-  for _, c in utf8.codes(str) do
-    chars[#chars + 1] = utf8.char(c)
+  for i = 1, vim.fn.strchars(str) do
+    chars[#chars + 1] = vim.fn.strcharpart(str, i - 1, 1)
   end
 
   return chars
